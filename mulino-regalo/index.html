@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il Tuo Regalo — 50 Anni</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <!-- ===== SCHERMATA 0: INTRO ===== -->
+  <section id="screen-intro" class="screen active">
+    <div class="intro-bg-overlay"></div>
+    <div class="intro-content">
+      <div class="intro-eyebrow">Un messaggio per te</div>
+      <h1 class="intro-title">
+        <span class="intro-number">50</span>
+        <span class="intro-label">Anni di Straordinario</span>
+      </h1>
+      <p class="intro-text">
+        Cinquant'anni. Non si celebrano con un fiocco e un pacchetto.<br/>
+        Si celebrano con un'<em>esperienza</em>. Con un posto speciale.<br/>
+        Con ricordi che non si dimenticano.
+      </p>
+      <p class="intro-subtext">
+        Il tuo regalo ti aspetta, ma prima devi guadagnartelo.<br/>
+        Tre enigmi. Tre indizi. Una destinazione segreta.
+      </p>
+      <button class="btn-primary" id="btn-start">
+        <span>Inizia l'Avventura</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== SCHERMATA 1: FASE 1 — LA STORIA ===== -->
+  <section id="screen-phase1" class="screen hidden">
+    <div class="phase-header">
+      <div class="phase-badge">Indizio 1 di 3</div>
+      <h2 class="phase-title">Le Radici del Tempo</h2>
+      <p class="phase-subtitle">Il tuo regalo ha una storia antica. Risolvi l'enigma per scoprire il primo indizio.</p>
+    </div>
+
+    <div class="phase-content">
+      <!-- Testo criptato con Anagramma -->
+      <div class="enigma-box" id="enigma1">
+        <div class="enigma-label">🏺 Anagramma Storico</div>
+        <p class="enigma-instruction">
+          Le parole qui sotto sono mescolate. Riordinale per scoprire cosa si nasconde nella tua destinazione segreta.
+        </p>
+
+        <div class="anagram-grid">
+          <div class="anagram-item">
+            <div class="anagram-word scrambled">NOLIUM</div>
+            <div class="anagram-arrow">→</div>
+            <input class="anagram-input" type="text" placeholder="???" data-answer="MULINO" maxlength="6" autocomplete="off" spellcheck="false" />
+          </div>
+          <div class="anagram-item">
+            <div class="anagram-word scrambled">TCORNETARAT</div>
+            <div class="anagram-arrow">→</div>
+            <input class="anagram-input" type="text" placeholder="?????????" data-answer="TERRACOTTA" maxlength="10" autocomplete="off" spellcheck="false" />
+          </div>
+          <div class="anagram-item">
+            <div class="anagram-word scrambled">VIGNETO</div>
+            <div class="anagram-arrow">→</div>
+            <input class="anagram-input" type="text" placeholder="???????" data-answer="VIGNETO" maxlength="7" autocomplete="off" spellcheck="false" />
+          </div>
+        </div>
+
+        <button class="btn-secondary" id="btn-check1">Verifica le Risposte</button>
+        <div class="feedback hidden" id="feedback1"></div>
+      </div>
+
+      <!-- Indizio svelato dopo risposta corretta -->
+      <div class="clue-reveal hidden" id="clue1">
+        <div class="clue-badge">✓ Indizio Sbloccato</div>
+        <blockquote class="clue-text">
+          "Il tuo regalo ha radici lontane. È un <strong>antico mulino</strong> per la macinazione del grano, di origine <strong>tardo-medievale</strong>, immerso tra le colline toscane. Conserva ancora le sue macine storiche, in disuso dalla fine degli anni '40. Un luogo dove il tempo si è fermato."
+        </blockquote>
+        <div class="clue-illustration">
+          <div class="clue-icon">⚙️</div>
+          <div class="clue-detail">Origine: Tardo Medioevo · Colline del Chianti, Toscana</div>
+        </div>
+        <button class="btn-primary" id="btn-next1">
+          <span>Prossimo Indizio</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCHERMATA 2: FASE 2 — LE ATTIVITÀ (Memory) ===== -->
+  <section id="screen-phase2" class="screen hidden">
+    <div class="phase-header">
+      <div class="phase-badge">Indizio 2 di 3</div>
+      <h2 class="phase-title">Cosa Ti Aspetta</h2>
+      <p class="phase-subtitle">Abbina le carte per scoprire le esperienze del tuo weekend. Trova tutte le 4 coppie.</p>
+    </div>
+
+    <div class="phase-content">
+      <div class="memory-stats">
+        <span>Mosse: <strong id="move-count">0</strong></span>
+        <span>Coppie trovate: <strong id="pair-count">0</strong>/4</span>
+      </div>
+      <div class="memory-grid" id="memory-grid">
+        <!-- Le carte vengono generate da script.js -->
+      </div>
+      <div class="feedback hidden" id="feedback2"></div>
+
+      <!-- Indizio svelato dopo aver completato il Memory -->
+      <div class="clue-reveal hidden" id="clue2">
+        <div class="clue-badge">✓ Indizio Sbloccato</div>
+        <blockquote class="clue-text">
+          "Ti rilasserai nella <strong>piscina Aqualis</strong>, un parco acquatico all'aperto tra le colline. Passeggerai tra <strong>vigneti e uliveti del Chianti</strong>. E a cena, ti aspettano i sapori autentici della cucina toscana: ricette tramandate da <strong>Nonna Wilma</strong>, con i leggendari piatti al <strong>tartufo bianco</strong>."
+        </blockquote>
+        <div class="clue-tags">
+          <span class="tag">🏊 Piscina Aqualis</span>
+          <span class="tag">🍇 Vigneti del Chianti</span>
+          <span class="tag">🫒 Uliveti</span>
+          <span class="tag">🍽️ Cucina di Nonna Wilma</span>
+          <span class="tag">🌿 Tartufo Bianco</span>
+        </div>
+        <button class="btn-primary" id="btn-next2">
+          <span>Ultimo Indizio</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCHERMATA 3: FASE 3 — L'ALLOGGIO (Indovinello) ===== -->
+  <section id="screen-phase3" class="screen hidden">
+    <div class="phase-header">
+      <div class="phase-badge">Indizio 3 di 3</div>
+      <h2 class="phase-title">La Dimora Segreta</h2>
+      <p class="phase-subtitle">Un ultimo enigma. Leggi l'indizio e indovina dove dormirai.</p>
+    </div>
+
+    <div class="phase-content">
+      <div class="enigma-box" id="enigma3">
+        <div class="enigma-label">🗼 Indovinello</div>
+        <div class="riddle-text">
+          <p>
+            "Dormirai in un luogo che ha sfidato i secoli. Una stanza ricavata nelle viscere di una struttura verticale, dove al centro <strong>svetta un enorme ceppo di legno</strong> che regge il cielo sopra di te. Dalla finestra, il tuo sguardo domina le colline del Chianti. Una vera dimora signorile."
+          </p>
+          <p class="riddle-hint">💡 <em>In quale tipo di struttura antica si trova questa camera?</em></p>
+        </div>
+
+        <div class="riddle-options" id="riddle-options">
+          <button class="riddle-btn" data-value="wrong1">Una grotta scavata nella roccia</button>
+          <button class="riddle-btn" data-value="torre">Un'antica torre medievale</button>
+          <button class="riddle-btn" data-value="wrong2">Un capanno in mezzo ai boschi</button>
+          <button class="riddle-btn" data-value="wrong3">Un rifugio di montagna</button>
+        </div>
+
+        <div class="feedback hidden" id="feedback3"></div>
+      </div>
+
+      <!-- Indizio finale svelato -->
+      <div class="clue-reveal hidden" id="clue3">
+        <div class="clue-badge">✓ Indizio Sbloccato</div>
+        <blockquote class="clue-text">
+          "La tua stanza è stata ricavata all'interno di un'<strong>antica torre medievale</strong>. Al suo centro, un maestoso ceppo di legno fa da trave portante per l'intero tetto. Un'architettura che racconta secoli di storia, tutta per te."
+        </blockquote>
+        <div class="clue-illustration">
+          <div class="clue-icon">🗼</div>
+          <div class="clue-detail">Camera della Torre · Vista panoramica sulle colline del Chianti</div>
+        </div>
+        <button class="btn-primary btn-final" id="btn-reveal">
+          <span>✨ Svela il Tuo Regalo</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCHERMATA FINALE: IL GRANDE SVELAMENTO ===== -->
+  <section id="screen-reveal" class="screen hidden">
+
+    <!-- Canvas per i coriandoli -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="reveal-content">
+      <div class="reveal-eyebrow">Il tuo regalo è…</div>
+      <h2 class="reveal-title">
+        <span class="reveal-place">Mulino di</span>
+        <span class="reveal-name">Quercegrossa</span>
+      </h2>
+      <p class="reveal-subtitle">Un weekend nel cuore del Chianti, Toscana</p>
+
+      <!-- Dettagli del Weekend -->
+      <div class="weekend-details">
+        <div class="detail-card">
+          <div class="detail-icon">📍</div>
+          <div class="detail-body">
+            <strong>Dove</strong>
+            <span>Quercegrossa, Siena — Chianti Classico</span>
+          </div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🗓️</div>
+          <div class="detail-body">
+            <strong>Quando</strong>
+            <span>Il weekend è tutto tuo — dal 3 al 5 luglio</span>
+          </div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🏠</div>
+          <div class="detail-body">
+            <strong>Dove dormirai</strong>
+            <span>Camera della Torre Medievale</span>
+          </div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🍷</div>
+          <div class="detail-body">
+            <strong>In tavola</strong>
+            <span>Cucina toscana · Ricette di Nonna Wilma · Tartufo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Galleria placeholder -->
+      <div class="gallery-section">
+        <h3 class="gallery-title">Un assaggio di ciò che ti aspetta</h3>
+        <div class="gallery-grid">
+          <div class="gallery-item gallery-large">
+            <div class="gallery-placeholder">
+               <img src="./img/location.jfif" alt="Mulino di Quercegrossa" class="gallery-large"/>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">
+               <img src="./img/piscina.jfif" alt="Piscina Aqualis" class="gallery-image" />
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">
+              <img src="./img/ristorante.jfif" alt="Ristorante di Nonna Wilma" class="gallery-image" />
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">
+               <img src="./img/camera.jfif" alt="Camera della Torre" class="gallery-image" />
+            </div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-placeholder">
+               <img src="./img/vigneti.jfif" alt="Vigneti del Chianti" class="gallery-image" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mappa stilizzata / Link -->
+      <div class="map-section">
+        <h3 class="map-title">Dove si trova</h3>
+        <div class="map-container">
+          <!-- Mappa OpenStreetMap embed (nessuna API key richiesta) -->
+          <iframe
+            title="Mulino di Quercegrossa su mappa"
+            width="100%"
+            height="300"
+            frameborder="0"
+            style="border-radius: 12px;"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=11.28%2C43.42%2C11.42%2C43.52&layer=mapnik&marker=43.47%2C11.35"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+          <div class="map-caption">Quercegrossa, Siena · Chianti Classico, Toscana</div>
+        </div>
+      </div>
+
+      <!-- CTA Links -->
+      <div class="cta-links">
+        <h3>Sogna ad occhi aperti</h3>
+        <div class="cta-buttons">
+          <a class="btn-link" href="https://www.mulinodiquercegrossa.it" target="_blank" rel="noopener">
+            🌐 Sito Ufficiale
+          </a>
+          <a class="btn-link" href="https://maps.google.com/?q=Mulino+di+Quercegrossa+Siena" target="_blank" rel="noopener">
+            🗺️ Google Maps
+          </a>
+          <a class="btn-link" href="https://www.booking.com/hotel/it/mulino-di-quercegrossa.html" target="_blank" rel="noopener">
+            🏨 Booking.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Messaggio finale -->
+      <div class="final-message">
+        <p>
+          "Cinquant'anni si festeggiano con qualcosa di grande.<br/>
+          Con un posto che ti fa sentire che il mondo è bello.<br/>
+          <strong>Buon compleanno.</strong>"
+        </p>
+        <div class="final-signature">Con tutto l'affetto la tua tatina ❤️<br>
+          <small><i> Powered by Lorenzo</i></small>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Barra di progresso fissa -->
+  <div class="progress-bar hidden" id="progress-bar">
+    <div class="progress-steps">
+      <div class="progress-step" data-step="1">
+        <div class="step-dot"></div>
+        <div class="step-label">La Storia</div>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step" data-step="2">
+        <div class="step-dot"></div>
+        <div class="step-label">Le Attività</div>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step" data-step="3">
+        <div class="step-dot"></div>
+        <div class="step-label">L'Alloggio</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
