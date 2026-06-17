@@ -306,7 +306,7 @@ function checkMemoryMatch() {
    ===================================================== */
 
 function initPhase3() {
-  const options = document.querySelectorAll('.riddle-btn');
+  const options = document.querySelectorAll('#riddle-options .riddle-btn');
   options.forEach(btn => {
     btn.addEventListener('click', () => handleRiddleAnswer(btn));
     btn.addEventListener('keydown', e => {
@@ -324,7 +324,7 @@ function initPhase3() {
  */
 function handleRiddleAnswer(btn) {
   // Evita doppie risposte
-  const options = document.querySelectorAll('.riddle-btn');
+  const options = document.querySelectorAll('#riddle-options .riddle-btn');
   options.forEach(b => b.disabled = true);
 
   if (btn.dataset.value === 'torre') {
@@ -473,6 +473,220 @@ function launchConfetti() {
 }
 
 /* =====================================================
+   CAPITOLO 2 — FASE 4: LA CITTÀ (Scelta Multipla)
+   ===================================================== */
+
+function initPhase4() {
+  const options = document.querySelectorAll('#riddle-options-cap2 .riddle-btn');
+  options.forEach(btn => {
+    btn.addEventListener('click', () => handlePhase4Answer(btn));
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handlePhase4Answer(btn);
+      }
+    });
+  });
+}
+
+function handlePhase4Answer(btn) {
+  const options = document.querySelectorAll('#riddle-options-cap2 .riddle-btn');
+  options.forEach(b => b.disabled = true);
+
+  if (btn.dataset.value === 'sangimignano') {
+    btn.classList.add('correct');
+    hideFeedback('feedback4');
+    setTimeout(() => revealClue('clue4', 'enigma4'), 500);
+  } else {
+    btn.classList.add('wrong');
+    showFeedback('feedback4', '❌ Città errata. Rileggi e riprova!', 'error');
+    setTimeout(() => {
+      btn.classList.remove('wrong');
+      options.forEach(b => b.disabled = false);
+      hideFeedback('feedback4');
+    }, 1500);
+  }
+}
+
+/* =====================================================
+   CAPITOLO 2 — FASE 5: DATA E ORA (Codice Segreto)
+   ===================================================== */
+
+function initPhase5() {
+  const inputs = document.querySelectorAll('.code-digit');
+  const btnCheck = document.getElementById('btn-check5');
+
+  if (!btnCheck) return;
+
+  inputs.forEach((input, index) => {
+    // Passaggio automatico al prossimo input
+    input.addEventListener('input', (e) => {
+      // Lascia solo numeri
+      input.value = input.value.replace(/\D/g, '');
+      if (input.value.length === 1 && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+    });
+
+    // Torna indietro col backspace
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && input.value === '' && index > 0) {
+        inputs[index - 1].focus();
+      }
+      if (e.key === 'Enter') {
+        checkPhase5Code();
+      }
+    });
+  });
+
+  btnCheck.addEventListener('click', checkPhase5Code);
+}
+
+function checkPhase5Code() {
+  const inputs = document.querySelectorAll('.code-digit');
+  let code = '';
+  inputs.forEach(input => code += input.value);
+
+  // Il codice corretto: Mese(07) Giorno(05) Ora(11) -> Wait, user plan said Mese is not specified but day is half of 10 (5), hour is 11.
+  // Oh, wait, the hint says: Mese del compleanno, giorno metà di 10, ora primo dispari 2 cifre.
+  // Birthday is July 3rd -> Wait, the user said "5 luglio alle ore 11".
+  // The hint in the plan says: Mese=mese compleanno (07). Giorno=5. Ora=11. 
+  // Let's accept '0511' (only day and hour if 4 digits) as per the instruction: "[G][G][O][O]"
+  // The instruction says format [G][G][O][O]. The prompt in index.html says: 
+  // "Mese = ... Giorno = ... Ora = ..." -> Actually my HTML says: "[G][G][O][O] (Es. se fosse il 3 alle 14: 0314)"
+  // So the code should be '0511'.
+
+  if (code === '0511') {
+    inputs.forEach(input => {
+      input.classList.remove('wrong');
+      input.classList.add('correct');
+    });
+    hideFeedback('feedback5');
+    setTimeout(() => revealClue('clue5', 'enigma5'), 500);
+  } else {
+    inputs.forEach(input => {
+      input.classList.add('wrong');
+    });
+    showFeedback('feedback5', '❌ Codice errato. Riprova!', 'error');
+    setTimeout(() => {
+      inputs.forEach(input => input.classList.remove('wrong'));
+      hideFeedback('feedback5');
+    }, 1000);
+  }
+}
+
+/* =====================================================
+   CAPITOLO 2 — FASE 6: PAROLE DEL GUSTO
+   ===================================================== */
+
+const TASTING_WORDS = [
+  { text: 'Vernaccia', correct: true },
+  { text: 'Spiaggia', correct: false },
+  { text: 'Olio EVO', correct: true },
+  { text: 'Montagna', correct: false },
+  { text: 'Degustazione', correct: true },
+  { text: 'Grattacielo', correct: false },
+  { text: 'Formaggi & Salumi', correct: true },
+  { text: 'Autostrada', correct: false },
+];
+
+let phase6State = {
+  selected: []
+};
+
+function initPhase6() {
+  const grid = document.getElementById('word-grid');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+  phase6State.selected = [];
+  updateWordCount();
+
+  const words = shuffle([...TASTING_WORDS]);
+
+  words.forEach((word, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'word-btn';
+    btn.textContent = word.text;
+    btn.dataset.correct = word.correct;
+
+    btn.addEventListener('click', () => handleWordClick(btn, word));
+    grid.appendChild(btn);
+  });
+}
+
+function handleWordClick(btn, word) {
+  if (btn.classList.contains('selected')) {
+    // Deseleziona
+    btn.classList.remove('selected');
+    phase6State.selected = phase6State.selected.filter(w => w !== word.text);
+  } else {
+    // Seleziona
+    if (phase6State.selected.length >= 4) {
+      showFeedback('feedback6', 'Hai già selezionato 4 parole. Deselezionane una per sceglierne un\'altra.', 'error');
+      setTimeout(() => hideFeedback('feedback6'), 2000);
+      return;
+    }
+    btn.classList.add('selected');
+    phase6State.selected.push(word.text);
+  }
+
+  updateWordCount();
+
+  if (phase6State.selected.length === 4) {
+    checkPhase6Words();
+  }
+}
+
+function updateWordCount() {
+  const countEl = document.getElementById('word-count');
+  if (countEl) {
+    countEl.textContent = phase6State.selected.length;
+  }
+}
+
+function checkPhase6Words() {
+  const btns = document.querySelectorAll('.word-btn.selected');
+  let allCorrect = true;
+
+  // Controlla prima se c'è almeno un errore
+  btns.forEach(btn => {
+    if (btn.dataset.correct === 'false') {
+      allCorrect = false;
+    }
+  });
+
+  if (allCorrect) {
+    btns.forEach(btn => {
+      btn.classList.add('correct-anim');
+    });
+    hideFeedback('feedback6');
+    setTimeout(() => revealClue('clue6', 'enigma6'), 600);
+  } else {
+    // Mostra momentaneamente quali erano giuste e quali sbagliate
+    btns.forEach(btn => {
+      if (btn.dataset.correct === 'true') {
+        btn.classList.add('correct-temp');
+      } else {
+        btn.classList.add('wrong-anim');
+      }
+      
+      // Dopo 800ms rimuovi tutti i feedback visivi e la selezione
+      setTimeout(() => {
+        btn.classList.remove('wrong-anim', 'correct-temp', 'selected');
+      }, 800);
+    });
+
+    // Svuota completamente le selezioni
+    phase6State.selected = [];
+    updateWordCount();
+    
+    showFeedback('feedback6', '❌ Qualche parola non c\'entra. Riprova!', 'error');
+    setTimeout(() => hideFeedback('feedback6'), 2000);
+  }
+}
+
+/* =====================================================
    8. INIT — Collegamento eventi e avvio
    ===================================================== */
 
@@ -510,10 +724,69 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ——— FASE 3 → SVELAMENTO ——— */
   document.getElementById('btn-reveal').addEventListener('click', () => {
     goToScreen('screen-phase3', 'screen-reveal');
-    // Nascondi progress bar nella schermata finale
     const bar = document.getElementById('progress-bar');
     if (bar) bar.classList.add('hidden');
-    // Lancia coriandoli dopo un breve ritardo (aspetta che la schermata sia visibile)
+    setTimeout(launchConfetti, 400);
+  });
+
+  /* =====================================================
+     INIT CAPITOLO 2
+     ===================================================== */
+
+  /* ——— SVELAMENTO 1 → FASE 4 ——— */
+  document.getElementById('btn-start-cap2').addEventListener('click', () => {
+    // Ferma i coriandoli e nascondi il canvas
+    const canvas = document.getElementById('confetti-canvas');
+    if (canvas) {
+      canvas.style.display = 'none';
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    goToScreen('screen-reveal', 'screen-phase4');
+    
+    // Ripristina e aggiorna la barra di progresso
+    const bar = document.getElementById('progress-bar');
+    if (bar) bar.classList.remove('hidden');
+    
+    // Aggiorna etichette barra per il Capitolo 2
+    const labels = document.querySelectorAll('.step-label');
+    if (labels.length >= 3) {
+      labels[0].textContent = 'La Città';
+      labels[1].textContent = 'La Data';
+      labels[2].textContent = 'I Sapori';
+    }
+    updateProgress(1);
+  });
+
+  /* ——— FASE 4 init ——— */
+  initPhase4();
+
+  /* ——— FASE 4 → FASE 5 ——— */
+  document.getElementById('btn-next4').addEventListener('click', () => {
+    goToScreen('screen-phase4', 'screen-phase5');
+    updateProgress(2);
+  });
+
+  /* ——— FASE 5 init ——— */
+  initPhase5();
+
+  /* ——— FASE 5 → FASE 6 ——— */
+  document.getElementById('btn-next5').addEventListener('click', () => {
+    goToScreen('screen-phase5', 'screen-phase6');
+    updateProgress(3);
+    initPhase6(); // inizializza la griglia parole qui
+  });
+
+  /* ——— FASE 6 → SVELAMENTO 2 ——— */
+  document.getElementById('btn-reveal2').addEventListener('click', () => {
+    goToScreen('screen-phase6', 'screen-reveal2');
+    const bar = document.getElementById('progress-bar');
+    if (bar) bar.classList.add('hidden');
+    
+    // Mostra il canvas e rilancia i coriandoli
+    const canvas = document.getElementById('confetti-canvas');
+    if (canvas) canvas.style.display = 'block';
     setTimeout(launchConfetti, 400);
   });
 

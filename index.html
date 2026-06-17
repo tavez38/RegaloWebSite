@@ -289,11 +289,251 @@
         </div>
       </div>
 
-      <!-- Messaggio finale -->
+      <!-- Messaggio per Capitolo 2 -->
       <div class="final-message">
         <p>
           "Cinquant'anni si festeggiano con qualcosa di grande.<br/>
-          Con un posto che ti fa sentire che il mondo è bello.<br/>
+          Ma questo è solo il <strong>Capitolo 1</strong> della tua vacanza."
+        </p>
+        <button class="btn-primary" id="btn-start-cap2" style="margin-top: 1.5rem;">
+          <span>Scopri il Capitolo 2</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       CAPITOLO 2: LA CANTINA
+       ======================================================== -->
+
+  <!-- ===== SCHERMATA 4: FASE 4 — LA CITTÀ ===== -->
+  <section id="screen-phase4" class="screen hidden">
+    <div class="phase-header">
+      <div class="phase-badge">Capitolo 2 · Indizio 1 di 3</div>
+      <h2 class="phase-title">Un Orizzonte di Pietra</h2>
+      <p class="phase-subtitle">La tua seconda avventura è vicina all'alloggio. Risolvi l'enigma per scoprire la città.</p>
+    </div>
+
+    <div class="phase-content">
+      <div class="enigma-box" id="enigma4">
+        <div class="enigma-label">🏰 L'Enigma della Città</div>
+        <div class="riddle-text">
+          <p>
+            "Sorge su un colle e domina la Val d'Elsa. Nel Medioevo contava ben 72 torri, innalzate dalle famiglie nobili per mostrare il loro potere. Oggi ne restano 14 a disegnare il suo inconfondibile profilo, tanto da farla chiamare la 'Manhattan del Medioevo'."
+          </p>
+          <p class="riddle-hint">💡 <em>Qual è il nome di questa celebre cittadina toscana?</em></p>
+        </div>
+
+        <div class="riddle-options" id="riddle-options-cap2">
+          <button class="riddle-btn" data-value="wrong1">Monteriggioni</button>
+          <button class="riddle-btn" data-value="sangimignano">San Gimignano</button>
+          <button class="riddle-btn" data-value="wrong2">Volterra</button>
+          <button class="riddle-btn" data-value="wrong3">Siena</button>
+        </div>
+
+        <div class="feedback hidden" id="feedback4"></div>
+      </div>
+
+      <!-- Indizio svelato -->
+      <div class="clue-reveal hidden" id="clue4">
+        <div class="clue-badge">✓ Indizio Sbloccato</div>
+        <blockquote class="clue-text">
+          "Esatto! La tua prossima meta si trova a <strong>San Gimignano</strong>, un borgo unico al mondo, dichiarato Patrimonio dell'Umanità dall'UNESCO."
+        </blockquote>
+        <div class="clue-illustration">
+          <div class="clue-icon">🏰</div>
+          <div class="clue-detail">Borgo: San Gimignano · Val d'Elsa</div>
+        </div>
+        <button class="btn-primary" id="btn-next4">
+          <span>Prossimo Indizio</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCHERMATA 5: FASE 5 — DATA E ORA ===== -->
+  <section id="screen-phase5" class="screen hidden">
+    <div class="phase-header">
+      <div class="phase-badge">Capitolo 2 · Indizio 2 di 3</div>
+      <h2 class="phase-title">L'Ora X</h2>
+      <p class="phase-subtitle">Non si può arrivare in ritardo. Inserisci il codice numerico a 4 cifre per svelare l'appuntamento.</p>
+    </div>
+
+    <div class="phase-content">
+      <div class="enigma-box" id="enigma5">
+        <div class="enigma-label">🔢 Il Codice del Tempo</div>
+        <p class="enigma-instruction" style="text-align: center;">
+          Giorno = La metà esatta di 10.<br/>
+          Ora = Il primo numero intero dispari a due cifre.
+        </p>
+        
+        <p class="riddle-hint" style="text-align: center; margin-bottom: 1rem;">
+          💡 <em>Formato: [G][G][O][O] (Es. se fosse il 3 alle 14: 0314)</em>
+        </p>
+
+        <div class="code-inputs">
+          <input type="text" class="code-digit" maxlength="1" data-index="0" autocomplete="off" inputmode="numeric">
+          <input type="text" class="code-digit" maxlength="1" data-index="1" autocomplete="off" inputmode="numeric">
+          <input type="text" class="code-digit" maxlength="1" data-index="2" autocomplete="off" inputmode="numeric">
+          <input type="text" class="code-digit" maxlength="1" data-index="3" autocomplete="off" inputmode="numeric">
+        </div>
+
+        <div style="text-align: center; margin-top: 1.5rem;">
+          <button class="btn-secondary" id="btn-check5">Verifica Codice</button>
+        </div>
+        <div class="feedback hidden" id="feedback5"></div>
+      </div>
+
+      <!-- Indizio svelato -->
+      <div class="clue-reveal hidden" id="clue5">
+        <div class="clue-badge">✓ Indizio Sbloccato</div>
+        <blockquote class="clue-text">
+          "L'appuntamento è fissato per il <strong>5 Luglio alle ore 11:00</strong>. Tieni a mente questo momento, sarà speciale."
+        </blockquote>
+        <div class="clue-illustration">
+          <div class="clue-icon">🕒</div>
+          <div class="clue-detail">Giorno 2 della vacanza · Mattinata</div>
+        </div>
+        <button class="btn-primary" id="btn-next5">
+          <span>Ultimo Indizio</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCHERMATA 6: FASE 6 — L'ESPERIENZA ===== -->
+  <section id="screen-phase6" class="screen hidden">
+    <div class="phase-header">
+      <div class="phase-badge">Capitolo 2 · Indizio 3 di 3</div>
+      <h2 class="phase-title">I Sapori</h2>
+      <p class="phase-subtitle">Cosa faremo lì? Seleziona solo le 4 parole legate alla terra toscana.</p>
+    </div>
+
+    <div class="phase-content">
+      <div class="enigma-box" id="enigma6">
+        <div class="enigma-label">🍇 Le Parole del Gusto</div>
+        <p class="enigma-instruction">
+          Trova l'intruso! Tocca le parole che compongono l'esperienza. (Attenzione a non farti distrarre dalle parole sbagliate).
+        </p>
+
+        <div class="word-grid" id="word-grid">
+          <!-- Popolato da script.js -->
+        </div>
+
+        <div style="text-align: center; margin-top: 1.5rem;">
+           <span style="font-size: 0.9rem; color: var(--c-text-light);">Trovate: <strong id="word-count" style="color: var(--c-olive);">0</strong> / 4</span>
+        </div>
+        <div class="feedback hidden" id="feedback6"></div>
+      </div>
+
+      <!-- Indizio finale svelato -->
+      <div class="clue-reveal hidden" id="clue6">
+        <div class="clue-badge">✓ Indizio Sbloccato</div>
+        <blockquote class="clue-text">
+          "Un percorso tra i filari per scoprire come nasce il vino, seguito da una <strong>degustazione di Vernaccia e vini locali</strong>, accompagnati da taglieri di salumi tipici, formaggi, olio extravergine di oliva e bruschette."
+        </blockquote>
+        <div class="clue-tags">
+          <span class="tag">🍷 Degustazione</span>
+          <span class="tag">🍇 Vernaccia di San Gimignano</span>
+          <span class="tag">🧀 Formaggi & Salumi</span>
+          <span class="tag">🫒 Olio EVO</span>
+        </div>
+        <button class="btn-primary btn-final" id="btn-reveal2">
+          <span>✨ Svela la Cantina</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCHERMATA FINALE CAPITOLO 2: LA CANTINA ===== -->
+  <section id="screen-reveal2" class="screen hidden">
+
+    <!-- Il canvas per i coriandoli è già in pagina, verrà riusato -->
+
+    <div class="reveal-content">
+      <div class="reveal-eyebrow">La seconda meta è…</div>
+      <h2 class="reveal-title">
+        <span class="reveal-place">Cantina</span>
+        <span class="reveal-name">Palagetto</span>
+      </h2>
+      <p class="reveal-subtitle">San Gimignano, Toscana</p>
+
+      <!-- Dettagli della visita -->
+      <div class="weekend-details">
+        <div class="detail-card">
+          <div class="detail-icon">📍</div>
+          <div class="detail-body">
+            <strong>Dove</strong>
+            <span>Palagetto, San Gimignano — Con vista sulle torri</span>
+          </div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🗓️</div>
+          <div class="detail-body">
+            <strong>Quando</strong>
+            <span>Venerdì 5 luglio, ore 11:00</span>
+          </div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🍇</div>
+          <div class="detail-body">
+            <strong>Cosa farete</strong>
+            <span>Tour e degustazione guidata</span>
+          </div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🍷</div>
+          <div class="detail-body">
+            <strong>In tavola</strong>
+            <span>Vernaccia, Chianti, olio EVO, taglieri tipici e vista mozzafiato</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mappa stilizzata / Link -->
+      <div class="map-section">
+        <h3 class="map-title">Dove si trova la Cantina</h3>
+        <div class="map-container">
+          <!-- Mappa OpenStreetMap embed per San Gimignano/Palagetto -->
+          <iframe
+            title="Cantina Palagetto su mappa"
+            width="100%"
+            height="300"
+            frameborder="0"
+            style="border-radius: 12px;"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=11.00%2C43.42%2C11.10%2C43.50&layer=mapnik&marker=43.467%2C11.043"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+          <div class="map-caption">San Gimignano · Terre di Siena, Toscana</div>
+        </div>
+      </div>
+
+      <!-- CTA Links per Cantina -->
+      <div class="cta-links">
+        <h3>Scopri la Cantina</h3>
+        <div class="cta-buttons">
+          <!-- Nota: il link ufficiale potrebbe essere non funzionante o cambiato, usiamo la ricerca Google Maps per sicurezza, ma lasciamo il link richiesto -->
+          <a class="btn-link" href="https://palagetto.it/" target="_blank" rel="noopener">
+            🌐 Sito Web
+          </a>
+          <a class="btn-link" href="https://maps.google.com/?q=Cantina+Palagetto+San+Gimignano" target="_blank" rel="noopener">
+            🗺️ Google Maps
+          </a>
+        </div>
+      </div>
+
+      <!-- Messaggio finale totale -->
+      <div class="final-message">
+        <p>
+          "Un mulino antico dove riposare.<br/>
+          Vigneti spettacolari dove brindare.<br/>
+          Cinquant'anni si festeggiano con qualcosa di grande.<br/>
+          Con luoghi che ti fanno sentire che il mondo è bello.<br/>
           <strong>Buon compleanno.</strong>"
         </p>
         <div class="final-signature">Con tutto l'affetto la tua tatina ❤️<br>
@@ -304,7 +544,7 @@
     </div>
   </section>
 
-  <!-- Barra di progresso fissa -->
+  <!-- Barra di progresso fissa (verrà aggiornata dal JS) -->
   <div class="progress-bar hidden" id="progress-bar">
     <div class="progress-steps">
       <div class="progress-step" data-step="1">

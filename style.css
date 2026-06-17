@@ -507,6 +507,100 @@ body {
   animation: shake 0.4s ease;
 }
 
+/* ——— CODICE SEGRETO (FASE 5) ——— */
+.code-inputs {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-md);
+  margin-top: var(--sp-md);
+}
+
+.code-digit {
+  width: 3rem;
+  height: 4rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--c-olive);
+  background: var(--c-white);
+  border: 2px solid var(--c-border);
+  border-radius: var(--r-sm);
+  transition: all var(--t-fast);
+}
+
+.code-digit:focus {
+  outline: none;
+  border-color: var(--c-olive);
+  box-shadow: 0 0 0 3px rgba(74, 92, 58, 0.12);
+}
+
+.code-digit.correct {
+  border-color: var(--c-olive);
+  background: rgba(74, 92, 58, 0.1);
+}
+
+.code-digit.wrong {
+  border-color: var(--c-terracotta);
+  background: rgba(192, 90, 58, 0.08);
+  animation: shake 0.4s ease;
+}
+
+/* ——— PAROLE DEL GUSTO (FASE 6) ——— */
+.word-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-md);
+  margin-top: var(--sp-lg);
+}
+
+.word-btn {
+  background: var(--c-cream-dark);
+  border: 2px solid var(--c-border);
+  border-radius: 50px;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--c-text);
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.word-btn:hover {
+  border-color: var(--c-olive);
+  background: rgba(74, 92, 58, 0.06);
+  transform: translateY(-2px);
+}
+
+.word-btn.selected {
+  border-color: var(--c-gold);
+  background: var(--c-gold);
+  color: var(--c-white);
+}
+
+.word-btn.correct-anim {
+  border-color: var(--c-olive);
+  background: var(--c-olive);
+  color: var(--c-white);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.word-btn.correct-temp {
+  border-color: var(--c-olive) !important;
+  background: rgba(74, 92, 58, 0.15) !important;
+  color: var(--c-olive) !important;
+}
+
+.word-btn.wrong-anim {
+  animation: shake 0.4s ease;
+  border-color: var(--c-terracotta) !important;
+  background: rgba(192, 90, 58, 0.08) !important;
+  color: var(--c-terracotta) !important;
+}
+
 /* ——— FEEDBACK ——— */
 .feedback {
   padding: var(--sp-md) var(--sp-lg);
