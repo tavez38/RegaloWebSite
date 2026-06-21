@@ -184,7 +184,7 @@ function checkAnagrams() {
 const MEMORY_PAIRS = [
   { id: 'pool',    emoji: '🏊',  label: 'Piscina Aqualis' },
   { id: 'wine',    emoji: '🍷',  label: 'Vigneti del Chianti' },
-  { id: 'food',    emoji: '🍽️', label: 'Cucina di Nonna Wilma' },
+  { id: 'food',    emoji: '🍽️', label: 'Autentica Cucina Toscana' },
   { id: 'olive',   emoji: '🫒',  label: 'Uliveti Toscani' },
 ];
 
@@ -513,7 +513,7 @@ function handlePhase4Answer(btn) {
    ===================================================== */
 
 function initPhase5() {
-  const inputs = document.querySelectorAll('.code-digit');
+  const inputs = document.querySelectorAll('#screen-phase5 .code-digit');
   const btnCheck = document.getElementById('btn-check5');
 
   if (!btnCheck) return;
@@ -543,7 +543,7 @@ function initPhase5() {
 }
 
 function checkPhase5Code() {
-  const inputs = document.querySelectorAll('.code-digit');
+  const inputs = document.querySelectorAll('#screen-phase5 .code-digit');
   let code = '';
   inputs.forEach(input => code += input.value);
 
@@ -687,6 +687,92 @@ function checkPhase6Words() {
 }
 
 /* =====================================================
+   CAPITOLO 3 — FASE 7: IL LUOGO
+   ===================================================== */
+
+function initPhase7() {
+  const options = document.querySelectorAll('#riddle-options-cap3 .riddle-btn');
+  options.forEach(btn => {
+    btn.addEventListener('click', () => handlePhase7Answer(btn));
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handlePhase7Answer(btn);
+      }
+    });
+  });
+}
+
+function handlePhase7Answer(btn) {
+  const options = document.querySelectorAll('#riddle-options-cap3 .riddle-btn');
+  options.forEach(b => b.disabled = true);
+
+  if (btn.dataset.value === 'cena') {
+    btn.classList.add('correct');
+    hideFeedback('feedback7');
+    setTimeout(() => revealClue('clue7', 'enigma7'), 500);
+  } else {
+    btn.classList.add('wrong');
+    showFeedback('feedback7', '❌ Non è esatto. Rileggi l\'indizio: si celebrano i sapori!', 'error');
+    setTimeout(() => {
+      btn.classList.remove('wrong');
+      options.forEach(b => b.disabled = false);
+      hideFeedback('feedback7');
+    }, 1500);
+  }
+}
+
+/* =====================================================
+   CAPITOLO 3 — FASE 8: DATA E ORA
+   ===================================================== */
+
+function initPhase8() {
+  const inputs = document.querySelectorAll('#code-inputs-cap3 .code-digit');
+  inputs.forEach((input, index) => {
+    input.addEventListener('input', (e) => {
+      input.value = input.value.replace(/[^0-9]/g, '');
+      if (input.value && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !input.value && index > 0) {
+        inputs[index - 1].focus();
+      }
+      if (e.key === 'Enter') {
+        document.getElementById('btn-check8').click();
+      }
+    });
+  });
+
+  document.getElementById('btn-check8').addEventListener('click', () => {
+    let code = '';
+    inputs.forEach(input => code += input.value);
+
+    // Venerdì 3 luglio alle 20:00 => 0320
+    if (code === '0320') {
+      inputs.forEach(input => {
+        input.disabled = true;
+        input.classList.remove('wrong');
+        input.classList.add('correct');
+      });
+      document.getElementById('btn-check8').disabled = true;
+      hideFeedback('feedback8');
+      setTimeout(() => revealClue('clue8', 'enigma8'), 500);
+    } else {
+      inputs.forEach(input => {
+        input.classList.add('wrong');
+      });
+      showFeedback('feedback8', '❌ Codice errato. Riprova!', 'error');
+      setTimeout(() => {
+        inputs.forEach(input => input.classList.remove('wrong'));
+        hideFeedback('feedback8');
+      }, 1000);
+    }
+  });
+}
+
+/* =====================================================
    8. INIT — Collegamento eventi e avvio
    ===================================================== */
 
@@ -785,6 +871,63 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bar) bar.classList.add('hidden');
     
     // Mostra il canvas e rilancia i coriandoli
+    const canvas = document.getElementById('confetti-canvas');
+    if (canvas) canvas.style.display = 'block';
+    setTimeout(launchConfetti, 400);
+  });
+
+  /* =====================================================
+     INIT CAPITOLO 3
+     ===================================================== */
+
+  /* ——— SVELAMENTO 2 → FASE 7 ——— */
+  document.getElementById('btn-start-cap3').addEventListener('click', () => {
+    const canvas = document.getElementById('confetti-canvas');
+    if (canvas) {
+      canvas.style.display = 'none';
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    goToScreen('screen-reveal2', 'screen-phase7');
+    
+    const bar = document.getElementById('progress-bar');
+    if (bar) bar.classList.remove('hidden');
+    
+    // Il Capitolo 3 ha solo 2 indizi. Nascondiamo il terzo step dalla progress bar
+    const steps = document.querySelectorAll('.progress-step');
+    const lines = document.querySelectorAll('.progress-line');
+    if (steps.length >= 3) {
+      steps[2].style.display = 'none';
+      lines[1].style.display = 'none';
+    }
+    
+    const labels = document.querySelectorAll('.step-label');
+    if (labels.length >= 2) {
+      labels[0].textContent = 'Il Luogo';
+      labels[1].textContent = 'La Data';
+    }
+    updateProgress(1);
+  });
+
+  /* ——— FASE 7 init ——— */
+  initPhase7();
+
+  /* ——— FASE 7 → FASE 8 ——— */
+  document.getElementById('btn-next7').addEventListener('click', () => {
+    goToScreen('screen-phase7', 'screen-phase8');
+    updateProgress(2);
+  });
+
+  /* ——— FASE 8 init ——— */
+  initPhase8();
+
+  /* ——— FASE 8 → SVELAMENTO 3 ——— */
+  document.getElementById('btn-reveal3').addEventListener('click', () => {
+    goToScreen('screen-phase8', 'screen-reveal3');
+    const bar = document.getElementById('progress-bar');
+    if (bar) bar.classList.add('hidden');
+    
     const canvas = document.getElementById('confetti-canvas');
     if (canvas) canvas.style.display = 'block';
     setTimeout(launchConfetti, 400);
