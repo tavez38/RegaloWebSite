@@ -819,7 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
      INIT CAPITOLO 2
      ===================================================== */
 
-  /* ——— SVELAMENTO 1 → FASE 4 ——— */
+  /* ——— SVELAMENTO 1 → FASE 7 (Cena, nuovo Capitolo 2) ——— */
   document.getElementById('btn-start-cap2').addEventListener('click', () => {
     // Ferma i coriandoli e nascondi il canvas
     const canvas = document.getElementById('confetti-canvas');
@@ -829,18 +829,24 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    goToScreen('screen-reveal', 'screen-phase4');
+    goToScreen('screen-reveal', 'screen-phase7');
     
     // Ripristina e aggiorna la barra di progresso
     const bar = document.getElementById('progress-bar');
     if (bar) bar.classList.remove('hidden');
     
-    // Aggiorna etichette barra per il Capitolo 2
+    // Il Capitolo 2 ha solo 2 indizi. Nascondiamo il terzo step dalla progress bar
+    const steps = document.querySelectorAll('.progress-step');
+    const lines = document.querySelectorAll('.progress-line');
+    if (steps.length >= 3) {
+      steps[2].style.display = 'none';
+      lines[1].style.display = 'none';
+    }
+    
     const labels = document.querySelectorAll('.step-label');
-    if (labels.length >= 3) {
-      labels[0].textContent = 'La Città';
+    if (labels.length >= 2) {
+      labels[0].textContent = 'Il Luogo';
       labels[1].textContent = 'La Data';
-      labels[2].textContent = 'I Sapori';
     }
     updateProgress(1);
   });
@@ -880,7 +886,7 @@ document.addEventListener('DOMContentLoaded', () => {
      INIT CAPITOLO 3
      ===================================================== */
 
-  /* ——— SVELAMENTO 2 → FASE 7 ——— */
+  /* ——— SVELAMENTO 3 (Cena) → FASE 4 (Cantina, nuovo Capitolo 3) ——— */
   document.getElementById('btn-start-cap3').addEventListener('click', () => {
     const canvas = document.getElementById('confetti-canvas');
     if (canvas) {
@@ -889,23 +895,24 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    goToScreen('screen-reveal2', 'screen-phase7');
+    goToScreen('screen-reveal3', 'screen-phase4');
     
     const bar = document.getElementById('progress-bar');
     if (bar) bar.classList.remove('hidden');
     
-    // Il Capitolo 3 ha solo 2 indizi. Nascondiamo il terzo step dalla progress bar
+    // Il Capitolo 3 ha 3 indizi. Mostriamo il terzo step
     const steps = document.querySelectorAll('.progress-step');
     const lines = document.querySelectorAll('.progress-line');
     if (steps.length >= 3) {
-      steps[2].style.display = 'none';
-      lines[1].style.display = 'none';
+      steps[2].style.display = 'flex';
+      lines[1].style.display = 'block';
     }
     
     const labels = document.querySelectorAll('.step-label');
-    if (labels.length >= 2) {
-      labels[0].textContent = 'Il Luogo';
+    if (labels.length >= 3) {
+      labels[0].textContent = 'La Città';
       labels[1].textContent = 'La Data';
+      labels[2].textContent = 'I Sapori';
     }
     updateProgress(1);
   });
